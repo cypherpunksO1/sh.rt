@@ -8,20 +8,26 @@
     <link rel="stylesheet" type="text/css" href="/static/css/index.css">
     <script src="/static/js/cookies.js"></script>
     <script src="/static/js/api.js"></script>
-
+    <script src="/static/js/index.js"></script>
     <title>Sh.rt!</title>
 </head>
 
 <body>
+<div class="notification" id="notification">
+        <span style="font-weight: 900;" id="notification-message">
+            Текст уведомления. Может быть довольно длинным. Например, настолько.
+        </span><br>
+    <button class="button-small" onclick="hideNotification();">Close</button>
+</div>
+
 <div class="content">
     <div style="width: 300px;" class="div-last-links">
         <div class="div-last-link">
             <div class="div-short-link">
                 <span class="title">
-                    <img style="margin-top: 2px;" src="/static/icons/link.png" class="icon-small">
                     <span id="link">Ссылки не существует.</span></span>
                 <br>
-                <span class="text link" style="margin-left: 20px;">
+                <span class="text link">
                     Статистика открытия ссылки
                 </span>
                 <br><br>

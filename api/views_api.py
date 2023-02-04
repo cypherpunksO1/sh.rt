@@ -35,12 +35,12 @@ class GetAllStatisticsAPIView(APIView):
 
 
 class GetLinkAPIView(APIView):
+    """ Возвращает статистику переходов ссылки """
     def get(self, request, *args, **kwargs):
         model = Link.objects.filter(key=kwargs['key'])
         if model:
             model = model[0]
             data = {
-                'link': model.link,
                 'passed': model.passed,
                 'unique_passed': Passed.objects.filter(link_key=kwargs['key']).count()
             }

@@ -44,8 +44,6 @@ async function updateStatistics() {
     }
 }
 
-// TODO: Закончить статистику ссылки
-
 async function setLinkStatistics(key) {
     let response = await fetch('/api/v1/link/' + key, {
         method: 'GET',
@@ -58,7 +56,11 @@ async function setLinkStatistics(key) {
 
     if (result['status'] === 'OK') {
         console.log(result);
-        document.getElementById('link').innerHTML = result['data']['link'];
+
+        let link = getSitePath() + key
+        link = link.slice(0, 25) + '...';
+
+        document.getElementById('link').innerHTML = link;
         document.getElementById('passed').innerHTML = result['data']['passed'];
         document.getElementById('uniquePassed').innerHTML = result['data']['unique_passed'];
     }
