@@ -24,12 +24,10 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
+    path('', HomePageTemplateView.as_view(), name='homePage'),
+
     path('api/v1/docs/download/', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     path('api/v1/docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-]
-
-urlpatterns += [
-    path('', HomePageTemplateView.as_view(), name='homePage'),
 
     path('api/v1/cutLink/', CutLinkAPIView.as_view(), name='cutLink'),
     path('api/v1/link/<str:key>/', GetLinkAPIView.as_view(), name='link_statistics'),

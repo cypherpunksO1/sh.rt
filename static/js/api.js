@@ -2,7 +2,7 @@ async function cutLink() {
     let link = document.getElementById('link').value;
     document.getElementById('link').value = "";
 
-    let response = await fetch('../api/v1/cutLink/', {
+    let response = await fetch('/api/v1/cutLink/', {
         method: 'POST',
         headers: {
             'X-CSRFToken': getCookie('csrftoken'),
@@ -23,11 +23,14 @@ async function cutLink() {
         document.getElementById('copy').onclick = function () {
             copyText(link);
         }
+        document.getElementById('link-statistics').onclick = function() {
+            openUrl(result['data']['key'] + '/statistics/', true);
+        }
     }
 }
 
 async function updateStatistics() {
-    let response = await fetch('../api/v1/allStatistics/', {
+    let response = await fetch('/api/v1/allStatistics/', {
         method: 'GET',
         headers: {
             'X-CSRFToken': getCookie('csrftoken'),
@@ -44,8 +47,7 @@ async function updateStatistics() {
 // TODO: Закончить статистику ссылки
 
 async function setLinkStatistics(key) {
-    console.log(getSitePath());
-    let response = await fetch(getSitePath() + 'api/v1/link/' + key, {
+    let response = await fetch('/api/v1/link/' + key, {
         method: 'GET',
         headers: {
             'X-CSRFToken': getCookie('csrftoken'),

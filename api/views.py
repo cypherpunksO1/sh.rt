@@ -27,12 +27,14 @@ class ForwardingPageTemplateView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        _link = Link.objects.filter(key=self.kwargs["key"])[0].link
-        context["link"] = _link
+        _link = Link.objects.filter(key=self.kwargs["key"])
+        if _link:
+            _link = _link[0].link
+            context["link"] = _link
 
-        data = {'ip_address': get_client_ip(self.request)}
-        serializer = AddPassedSerializer(data=data)
-        if serializer.is_valid():
-            serializer.create(serializer.validated_data)
+            data = {'ip_address': get_client_ip(self.request)}
+            serializer = AddPassedSerializer(data=data)
+            serializer.is_valid()
+            serializer.create(serializer.validated_data, key=self.kwargs['key'])
 
-        return context
+            return context

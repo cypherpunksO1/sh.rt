@@ -31,6 +31,15 @@ function getSitePath() {
 }
 
 
+function openUrl(url, targetBlank = false) {
+    if (targetBlank) {
+        window.open(url);
+    } else {
+        window.location.href = url;
+    }
+}
+
+
 function copyText(text) {
     const textArea = document.createElement("textarea");
     textArea.value = text;
@@ -40,6 +49,7 @@ function copyText(text) {
     document.execCommand('copy');
     document.getElementById('copy').removeChild(textArea);
 
+    showNotification("Ссылка скопирована в буфер обмена.")
 //    navigator.share({
 //        url: link
 //    }).then(function () {
@@ -50,4 +60,28 @@ function copyText(text) {
 //    })
 }
 
+
+function showNotification(text){
+    document.getElementById('notification-message').innerHTML = text;
+    let notification = document.getElementById('notification');
+    notification.style.display = 'block';
+
+    function notificationOpacity100() {
+        notification.style.opacity = '100%';
+    }
+
+    setTimeout(notificationOpacity100, 300)
+}
+
+function hideNotification(){
+    let notification = document.getElementById('notification');
+    notification.style.opacity = '0';
+
+    function notificationDisplayNone() {
+        notification.style.display = 'none';
+        document.getElementById('notification-message').innerHTML = "";
+    }
+
+    setTimeout(notificationDisplayNone, 300)
+}
 

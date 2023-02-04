@@ -19,7 +19,6 @@ class Link(models.Model):
                                    verbose_name='Дата создания')
 
     passed = models.IntegerField(default=0)
-    unique_passed = models.ManyToManyField('Passed')
 
     class Meta:
         verbose_name = 'ссылка'
@@ -30,3 +29,4 @@ class Passed(models.Model):
     ip_address = models.CharField(blank=False,
                                   max_length=100,
                                   unique=True)
+    link_key = models.TextField()

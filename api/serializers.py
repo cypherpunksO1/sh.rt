@@ -28,7 +28,18 @@ class AddPassedSerializer(ModelSerializer):
         model = Passed
         fields = '__all__'
 
-    def create(self, validated_data):
-        model = Passed(ip_address=validated_data['ip_address'])
-        model.save()
-        return model
+    def create(self, validated_data, key):
+        link_model = Link.objects.filter(key=key)
+        if link_model:
+            link_model = link_model[0]
+            link_model.passed += 1
+            link_model.save()
+
+        try:
+            passed_model = Passed(ip_address=validated_data['ip_address'],
+                                  link_key=key)
+            passed_model.save()
+        except:
+            ...
+
+        return link_model

@@ -14,6 +14,14 @@
 </head>
 
 <body>
+
+<div class="notification" id="notification">
+        <span style="font-weight: 900;" id="notification-message">
+            Текст уведомления. Может быть довольно длинным. Например, настолько.
+        </span><br>
+    <button class="button-small" onclick="hideNotification();">Close</button>
+</div>
+
 <div class="content">
     <div class="div-logo" style="width: 300px;">
             <span class="span-logo">
@@ -24,9 +32,6 @@
     <script>
         type("color-logo", 'Sh.', 400);
         setTimeout(type, 1500, "non-color-logo", 'Rt!', 400)
-
-
-
     </script>
 
     <div class="div-input-link">
@@ -47,6 +52,7 @@
             </div>
 
             <button style="margin-top: 10px;" class="button-small" id="copy">Copy Link</button>
+            <button style="margin-top: 10px;" class="button-small" id="link-statistics">Link statistics</button>
         </div>
     </div>
 </div>

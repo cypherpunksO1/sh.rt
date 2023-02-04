@@ -42,7 +42,7 @@ class GetLinkAPIView(APIView):
             data = {
                 'link': model.link,
                 'passed': model.passed,
-                'unique_passed': model.unique_passed.all().count()
+                'unique_passed': Passed.objects.filter(link_key=kwargs['key']).count()
             }
             return CustomResponse(data).good()
         else:
