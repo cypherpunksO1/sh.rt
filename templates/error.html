@@ -24,34 +24,24 @@
     <div style="width: 300px;" class="div-last-links">
         <div class="div-last-link">
             <div class="div-short-link">
-                <span class="title">
-                    <span id="link">Ссылки не существует.</span></span>
+                <center>
+                    <span class="title">
+                    <span id="link" style="font-size: 50px;">{{ error_code }}.</span></span>
+                </center>
                 <br>
-                <span class="text link">
-                    Статистика открытия ссылки
-                </span>
-                <br><br>
                 <span class="link new-link">
-                    <img style="margin-top: 2px;" src="/static/icons/ok.png" class="icon-small">
-                    Всего перешедших: <span id="passed">?</span> чел.
+                    {{ description }}
                 </span>
             </div>
 
             <center>
-                <button onclick="copyText(window.location.href);" style="margin-top: 10px;" class="button-small"
-                        id="copy">Копировать ссылку на статистику
+                <button onclick="openUrl('/');" style="margin-top: 10px;" class="button-small"
+                        id="copy">Вернуться на Sh.Rt!
                 </button>
             </center>
         </div>
     </div>
 </div>
-<script>
-    setLinkStatistics("{{ key }}");
-</script>
 
-<footer>
-    <a target="_blank" href="/api/v1/docs/"><span class="text span-link">API</span></a>,
-    <a target="_blank" href="/api/v1/docs/download/"><span class="text span-link">Download docs</span></a>,
-</footer>
 </body>
 </html>

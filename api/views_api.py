@@ -1,49 +1,42 @@
 from rest_framework.views import APIView
+from rest_framework.generics import CreateAPIView
 from api.serializers import CutLinkSerializer
 from api.base.response import CustomResponse
-
-from rest_framework.generics import CreateAPIView
-
-from api.models import *
+from django.shortcuts import get_object_or_404
+from api.models import Link
 
 
-class CutLinkAPIView(APIView):
-    """
-    link - полная ссылка на сайт
-    """
+class CustomCreateAPIView(CreateAPIView):
+    """CustomCreateAPIView."""
 
-    def post(self, request, *args, **kwargs):
-        serializer = CutLinkSerializer(data=request.data)
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return CustomResponse(serializer.data, headers=headers).make_response()
 
-        if serializer.is_valid():
-            model = serializer.create(serializer.validated_data)
-            return CustomResponse({'key': model.key,
-                                   'link': model.link}).good()
-        else:
-            return CustomResponse(serializer.errors).bad()
+
+class CutLinkAPIView(CustomCreateAPIView):
+    """link - site url."""
+
+    serializer_class = CutLinkSerializer
+    queryset = Link.objects.all()
 
 
 class GetAllStatisticsAPIView(APIView):
+    """Return now site statistics."""
+
     def get(self, request, *args, **kwargs):
         models_count = Link.objects.all().count()
-        data = {
-            'links': {
-                'count': models_count
-            }
-        }
-        return CustomResponse(data).good()
+        response_data = {'count': models_count}
+        return CustomResponse(response_data).make_response()
 
 
 class GetLinkAPIView(APIView):
-    """ Возвращает статистику переходов ссылки """
+    """Return link statistics."""
+
     def get(self, request, *args, **kwargs):
-        model = Link.objects.filter(key=kwargs['key'])
-        if model:
-            model = model[0]
-            data = {
-                'passed': model.passed,
-                'unique_passed': Passed.objects.filter(link_key=kwargs['key']).count()
-            }
-            return CustomResponse(data).good()
-        else:
-            return CustomResponse({}).bad_404()
+        model = get_object_or_404(Link.objects.filter(key=kwargs['key']))
+        response_data = {'passed': model.passed}
+        return CustomResponse(response_data).make_response()

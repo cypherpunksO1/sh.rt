@@ -3,31 +3,28 @@ from rest_framework import status
 
 
 class CustomResponse:
-    def __init__(self, data: dict):
+    def __init__(self, data: dict, message: str = None, **kwargs):
         self.data = data
+        self.message = message
+        self.kwargs = kwargs
 
-    def bad(self) -> Response:
+    def make_response(self, error: bool = False) -> Response:
         data = {
-            'status': 'ERR',
+            'error': error,
+            'message': self.message,
             'data': self.data
         }
+
+        _status = status.HTTP_200_OK
+
+        if error:
+            _status = status.HTTP_400_BAD_REQUEST
+
         return Response(
             data=data,
-            status=status.HTTP_400_BAD_REQUEST
+            status=_status,
+            **self.kwargs
         )
-
-    def good(self) -> Response:
-        data = {
-            'status': 'OK',
-            'data': self.data
-        }
-        return Response(
-            data=data,
-            status=status.HTTP_200_OK
-        )
-
-    def bad_404(self) -> Response:
-        return Response(status=status.HTTP_404_NOT_FOUND)
 
 
 class CustomErrors:

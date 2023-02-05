@@ -14,7 +14,7 @@ async function cutLink() {
     });
     let result = await response.json();
 
-    if (result['status'] === 'OK') {
+    if (result['error'] === false) {
         let link = getSitePath() + result['data']['key'];
         document.getElementById('last-link').style.display = 'block';
         document.getElementById('old-link').innerHTML = result['data']['link'];
@@ -26,6 +26,8 @@ async function cutLink() {
         document.getElementById('link-statistics').onclick = function() {
             openUrl(result['data']['key'] + '/statistics/', true);
         }
+    } else {
+        showNotification(result['link'][0])
     }
 }
 
@@ -39,8 +41,8 @@ async function updateStatistics() {
     });
     let result = await response.json();
 
-    if (result['status'] === 'OK') {
-        document.getElementById('links-count').innerHTML = result['data']['links']['count'];
+    if (result['error'] === false) {
+        document.getElementById('links-count').innerHTML = result['data']['count'];
     }
 }
 
@@ -54,7 +56,7 @@ async function setLinkStatistics(key) {
     });
     let result = await response.json();
 
-    if (result['status'] === 'OK') {
+    if (result['error'] === false) {
         console.log(result);
 
         let link = getSitePath() + key
