@@ -23,3 +23,11 @@ class Link(models.Model):
     class Meta:
         verbose_name = 'ссылка'
         verbose_name_plural = 'ссылки'
+
+
+class UniquePassed(models.Model):
+    session_key = models.CharField(max_length=150)
+    link = models.ForeignKey('Link', blank=True, null=True,
+                             on_delete=models.CASCADE)
+    created = models.DateField(auto_now_add=True,
+                               verbose_name='Дата перехода')

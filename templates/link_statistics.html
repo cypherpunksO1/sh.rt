@@ -6,6 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" type="text/css" href="/static/css/index.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
     <script src="/static/js/cookies.js"></script>
     <script src="/static/js/api.js"></script>
     <script src="/static/js/index.js"></script>
@@ -19,6 +20,12 @@
         </span><br>
     <button class="button-small" onclick="hideNotification();">Close</button>
 </div>
+
+<script>
+        type("color-logo", 'Sh.', 400);
+        setTimeout(type, 1500, "non-color-logo", 'Rt!', 400)
+
+</script>
 
 <div class="content">
     <div style="width: 300px;" class="div-last-links">
@@ -34,24 +41,40 @@
                 <span class="link new-link">
                     <img style="margin-top: 2px;" src="/static/icons/ok.png" class="icon-small">
                     Всего перешедших: <span id="passed">?</span> чел.
+                </span><br>
+                <span class="link new-link">
+                    <img style="margin-top: 2px;" src="/static/icons/ok_purple.png" class="icon-small">
+                    Уникальных перешедших: <span id="uniquePassed">?</span> чел.
                 </span>
             </div>
 
-            <center>
-                <button onclick="copyText(window.location.href);" style="margin-top: 10px;" class="button-small"
-                        id="copy">Копировать ссылку на статистику
-                </button>
-            </center>
+            <button onclick="copyText(window.location.href);" style="margin-top: 10px;" class="button-small"
+                    id="copy">Копировать ссылку на статистику
+            </button>
+            <br>
+            <button onclick="copyText(getSitePath() + '{{ key }}');" style="margin-top: 10px;" class="button-small"
+                    id="copy">Копировать ссылку
+            </button>
         </div>
     </div>
+    <div style="width: 300px;" class="div-last-links">
+        <div class="div-last-link">
+            <div class="div-short-link">
+                <span class="title">
+                    <span id="link">График переходов за последние 7 дней</span></span>
+                <br><br>
+                <canvas id="bar-chart" width="300" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+    <br>
+    <center>
+        <button style="margin-top: 10px;" onclick="openUrl('/', true);" class="button-small">Создать новую ссылку</button>
+    </center>
 </div>
 <script>
     setLinkStatistics("{{ key }}");
 </script>
 
-<footer>
-    <a target="_blank" href="/api/v1/docs/"><span class="text span-link">API</span></a>,
-    <a target="_blank" href="/api/v1/docs/download/"><span class="text span-link">Download docs</span></a>,
-</footer>
 </body>
 </html>

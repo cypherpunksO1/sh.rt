@@ -30,9 +30,10 @@ urlpatterns = [
     path('api/v1/docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
 
     path('api/v1/cutLink/', CutLinkAPIView.as_view(), name='cutLink'),
-    path('api/v1/link/<str:key>/', GetLinkAPIView.as_view(), name='link_statistics'),
+    path('api/v1/link/<str:key>/', GetLinkAPIView.as_view(), name='linkStatistics'),
+    path('api/v1/link/<str:key>/passed/', GetLinkPassedAPIView.as_view(), name='linkPassed'),
     path('api/v1/allStatistics/', GetAllStatisticsAPIView.as_view(), name='allStatistics'),
 
-    path('<str:key>/statistics/', LinkStatisticsPageTemplateView.as_view(), name='link_statistics'),
+    path('<str:key>/statistics/', LinkStatisticsPageTemplateView.as_view(), name='linkStatistics'),
     path('<str:key>/', ForwardingPageTemplateView.as_view(), name='forwarding'),
 ]

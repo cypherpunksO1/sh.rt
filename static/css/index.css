@@ -172,6 +172,10 @@ footer {
     margin-top: 10px;
 }
 
+.navbar {
+    font-size: 20px;
+}
+
 @media (max-width: 700px) {
     .span-input input {
         padding: 10px;

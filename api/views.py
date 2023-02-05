@@ -1,6 +1,6 @@
 from django.views.generic import TemplateView
 from django.shortcuts import get_object_or_404, render
-from api.models import Link
+from api.models import Link, UniquePassed
 
 
 class HomePageTemplateView(TemplateView):
@@ -37,6 +37,18 @@ class ForwardingPageTemplateView(TemplateView):
         link = get_object_or_404(Link.objects.filter(key=self.kwargs['key']))
 
         context['link'] = link.link
+
+        # save passed
+        if not self.request.session.session_key:
+            # Get session
+            self.request.session.save()
+        session_key = self.request.session.session_key
+
+        if not UniquePassed.objects.filter(session_key=session_key):
+            passed = UniquePassed()
+            passed.link = link
+            passed.session_key = session_key
+            passed.save()
 
         link.passed += 1
         link.save()

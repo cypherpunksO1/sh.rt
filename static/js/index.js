@@ -27,7 +27,7 @@ function type(element_id, source_text, speed) {
 
 
 function getSitePath() {
-    return window.location.protocol + window.location.host + '/'
+    return window.location.protocol + '//' + window.location.host + '/'
 }
 
 
